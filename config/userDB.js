@@ -8,7 +8,7 @@ const userDB = new sqlite3.Database("./userDB.sqlite", (error) => {
 
   const usersStmt = `
     CREATE TABLE users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id SERIAL PRIMARY KEY AUTOINCREMENT,
       username TEXT,
       email TEXT UNIQUE,
       password TEXT,

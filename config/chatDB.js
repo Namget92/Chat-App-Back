@@ -8,7 +8,7 @@ const chatDB = new sqlite3.Database("./chatDB.sqlite", (error) => {
 
   const chatStmt = `
     CREATE TABLE chat (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id SERIAL PRIMARY KEY AUTOINCREMENT,
       sender TEXT,
       receiver TEXT,
       text TEXT,

@@ -18,19 +18,6 @@ function logg(data) {
   });
 }
 
-// Function för att validera tokens. Används ej just nu.
-// const isValidJwt = (header) => {
-//   const token = header.split(" ")[1];
-//   dotenv.config();
-//   if (!token) {
-//     return false;
-//   }
-//   const auth = jwt.verify(token, process.env.TOKEN_SECRET);
-//   if (auth) {
-//     return true;
-//   }
-// };
-
 io.on("connection", (socket) => {
   const date = Date().substring(4, 24);
   socket.on("createAccount", (data) => {
