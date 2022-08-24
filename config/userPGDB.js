@@ -1,7 +1,7 @@
 const { Client } = require("pg");
 
 const usersStmt = `
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
   username TEXT,
   email TEXT UNIQUE,

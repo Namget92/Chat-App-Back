@@ -1,7 +1,7 @@
 const { Client } = require("pg");
 
 const chatStmt = `
-CREATE TABLE chat (
+CREATE TABLE IF NOT EXISTS chat (
   id SERIAL PRIMARY KEY,
   sender TEXT,
   receiver TEXT,

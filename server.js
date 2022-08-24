@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = require("express");
 const INDEX = "/index.html";
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 4000;
 
 const model = require("./models/auth.model");
 const md5 = require("md5");
