@@ -6,7 +6,7 @@ const app = require("express")();
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
   cors: {
-    origin: "*",
+    origin: "https://tgt-chat-app-front.herokuapp.com",
     methods: ["GET", "POST"],
     credentials: true,
   },
