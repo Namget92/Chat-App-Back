@@ -9,6 +9,9 @@ const io = require("socket.io")(http, {
     origin: "https://tgt-chat-app-front.herokuapp.com",
     methods: ["GET", "POST"],
     credentials: true,
+    extraHeaders: {
+      "Access-Control-Allow-Credentials": "omit",
+    },
   },
 });
 const fs = require("fs");
