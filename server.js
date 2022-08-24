@@ -1,7 +1,9 @@
 const express = require("express");
 const app = require("express");
 const INDEX = "/index.html";
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 80;
+
+app.use(cors());
 
 const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
