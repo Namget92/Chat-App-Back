@@ -1,10 +1,18 @@
+const express = require("express");
+const app = require("express");
+const INDEX = "/index.html";
+const PORT = process.env.PORT || 4001;
+
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
 const model = require("./models/auth.model");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const app = require("express")();
 const http = require("http").Server(app);
-const io = require("socket.io")(http, {
+const io = require("socket.io")(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -215,4 +223,4 @@ io.on("connection", (socket) => {
   });
 });
 
-http.listen(process.env.PORT || 4000, () => {});
+http.listen(PORT, () => {});
