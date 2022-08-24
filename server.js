@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = require("express");
 const INDEX = "/index.html";
 const PORT = process.env.PORT || 80;
