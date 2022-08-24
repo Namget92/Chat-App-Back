@@ -4,10 +4,6 @@ const app = require("express");
 const INDEX = "/index.html";
 const PORT = process.env.PORT || 80;
 
-const server = express()
-  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-  .listen(PORT, () => console.log(`Listening on ${PORT}`));
-
 const model = require("./models/auth.model");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
