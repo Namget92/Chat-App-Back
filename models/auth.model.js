@@ -14,7 +14,7 @@ async function authRegister(user) {
 
 async function authLogin(email) {
   const sql = "SELECT * FROM users WHERE username = $1";
-  const result = await userPGDB.query(sql, email);
+  const result = await userPGDB.query(sql, [email]);
   return resolve.rows;
 }
 
@@ -64,19 +64,19 @@ async function deleteChat(receiver) {
 
 async function authUsers(username) {
   const sql = "SELECT username FROM users WHERE username != $1";
-  const result = await userPGDB.query(sql, username);
+  const result = await userPGDB.query(sql, [username]);
   return resolve.rows;
 }
 
 async function getSocketReceiver(username) {
   const sql = "SELECT socketId FROM users WHERE username = $1";
-  const result = await userPGDB.query(sql, username);
+  const result = await userPGDB.query(sql, [username]);
   return resolve.rows;
 }
 
 async function getSocketSender(username) {
   const sql = "SELECT socketId FROM users WHERE username = $1";
-  const result = await userPGDB.query(sql, username);
+  const result = await userPGDB.query(sql, [username]);
   return resolve.rows;
 }
 module.exports = {
