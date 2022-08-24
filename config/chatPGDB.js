@@ -2,7 +2,7 @@ const { Client } = require("pg");
 
 const chatStmt = `
 CREATE TABLE chat (
-  id SERIAL PRIMARY KEY AUTOINCREMENT,
+  id SERIAL PRIMARY KEY,
   sender TEXT,
   receiver TEXT,
   text TEXT,
