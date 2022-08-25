@@ -9,6 +9,7 @@ async function authRegister(user) {
     user.email,
     user.password,
   ]);
+  console.log("authRegister");
   console.log(result);
   return result.rows;
 }
