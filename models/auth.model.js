@@ -18,7 +18,7 @@ async function authLogin(username) {
   const sql = "SELECT * FROM users WHERE username = $1";
   const result = await userPGDB.query(sql, [username]);
 
-  return result.rows;
+  return result.rows[0];
 }
 
 async function authChat(sender, receiver, text, type, date) {
@@ -44,19 +44,19 @@ async function authChats() {
   const type = "group";
   const sql = "SELECT DISTINCT receiver FROM chat WHERE type = $1";
   const result = await chatPGDB.query(sql, [type]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function getChat(receiver) {
   const sql = "SELECT * FROM chat WHERE receiver = $1";
   const result = await chatPGDB.query(sql, [receiver]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function getDMChat(sender, receiver) {
   const sql = "SELECT * FROM chat WHERE receiver = $1 OR receiver = $1";
   const result = await chatPGDB.query(sql, [sender, receiver]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function deleteChat(receiver) {
@@ -68,19 +68,19 @@ async function deleteChat(receiver) {
 async function authUsers(username) {
   const sql = "SELECT username FROM users WHERE username != $1";
   const result = await userPGDB.query(sql, [username]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function getSocketReceiver(username) {
   const sql = "SELECT socketId FROM users WHERE username = $1";
   const result = await userPGDB.query(sql, [username]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function getSocketSender(username) {
   const sql = "SELECT socketId FROM users WHERE username = $1";
   const result = await userPGDB.query(sql, [username]);
-  return result.rows;
+  return result.rows[0];
 }
 module.exports = {
   getSocketSender,
