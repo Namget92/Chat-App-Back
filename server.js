@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
       if (!username || !email || !password) {
         return socket.emit("createAccountResponse", {
           info: "One or more of the following is missing. Username, email or password",
+          result: data,
         });
       }
       const existingUser = await model.authLogin(username);
