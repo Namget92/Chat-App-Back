@@ -54,7 +54,7 @@ async function getChat(receiver) {
 async function getDMChat(sender, receiver) {
   const sql = "SELECT * FROM chat WHERE receiver = $1 OR receiver = $2";
   const result = await chatPGDB.query(sql, [sender, receiver]);
-  return result.rows[0];
+  return result.rows;
 }
 
 async function deleteChat(receiver) {
