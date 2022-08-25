@@ -42,7 +42,7 @@ async function authChats() {
   const type = "group";
   const sql = "SELECT DISTINCT receiver FROM chat WHERE type = $1";
   const result = await chatPGDB.query(sql, [type]);
-  return result.rows[0];
+  return result.rows;
 }
 
 async function getChat(receiver) {
