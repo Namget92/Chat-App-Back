@@ -66,7 +66,7 @@ async function deleteChat(receiver) {
 async function authUsers(username) {
   const sql = "SELECT username FROM users WHERE username != $1";
   const result = await userPGDB.query(sql, [username]);
-  return result.rows[0];
+  return result.rows;
 }
 
 async function getSocketReceiver(username) {
