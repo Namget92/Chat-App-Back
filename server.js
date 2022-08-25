@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 4000;
 const model = require("./models/auth.model");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv").config();
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
   cors: {

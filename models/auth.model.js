@@ -12,8 +12,6 @@ async function authRegister(user) {
   return result.rows;
 }
 
-// Kolla på result.rows (svaret postgres ger tbx)
-
 async function authLogin(username) {
   const sql = "SELECT * FROM users WHERE username = $1";
   const result = await userPGDB.query(sql, [username]);
