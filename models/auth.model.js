@@ -9,7 +9,7 @@ async function authRegister(user) {
     user.email,
     user.password,
   ]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function authLogin(username) {
@@ -29,13 +29,13 @@ async function authChat(sender, receiver, text, type, date) {
     type,
     date,
   ]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function updateSocketId(socketId, user) {
-  const sql = "UPDATE users SET socketId = $1 WHERE username = $1";
+  const sql = "UPDATE users SET socketId = $1 WHERE username = $2";
   const result = await userPGDB.query(sql, [socketId, user]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function authChats() {
@@ -52,7 +52,7 @@ async function getChat(receiver) {
 }
 
 async function getDMChat(sender, receiver) {
-  const sql = "SELECT * FROM chat WHERE receiver = $1 OR receiver = $1";
+  const sql = "SELECT * FROM chat WHERE receiver = $1 OR receiver = $2";
   const result = await chatPGDB.query(sql, [sender, receiver]);
   return result.rows[0];
 }
@@ -60,7 +60,7 @@ async function getDMChat(sender, receiver) {
 async function deleteChat(receiver) {
   const sql = "DELETE FROM chat WHERE receiver = $1";
   const result = await chatPGDB.query(sql, [receiver]);
-  return result.rows;
+  return result.rows[0];
 }
 
 async function authUsers(username) {
