@@ -15,13 +15,6 @@ const io = require("socket.io")(http, {
     methods: ["GET", "POST"],
   },
 });
-const fs = require("fs");
-
-function logg(data) {
-  fs.writeFile("logg.txt", data, { flag: "a" }, (err) => {
-    if (err) console.log(err);
-  });
-}
 
 io.on("connection", (socket) => {
   const date = Date().substring(4, 24);
@@ -41,8 +34,6 @@ io.on("connection", (socket) => {
         });
       }
       const user = { username, email, password: md5(password) };
-      const loggVarible = JSON.stringify(user);
-      logg(`${date}. New user added. ${loggVarible} \r\n`);
       await model.authRegister(user);
       io.emit("updateUsers");
       return socket.emit("createAccountResponse", {
@@ -57,7 +48,6 @@ io.on("connection", (socket) => {
       return socket.emit("noText", "Needs atleast 1 character");
     }
     async function chatText(sender, receiver, text, type) {
-      logg(`${date}. ${sender} wrote - ${text} - in room ${receiver} \r\n`);
       await model.authChat(sender, receiver, text, type, date);
       const chatMessages = await model.getChat(receiver);
       io.in(receiver).emit("collectMessages", chatMessages);
@@ -69,7 +59,6 @@ io.on("connection", (socket) => {
       return socket.emit("noText", "Needs atleast 1 character");
     }
     async function chatText(sender, receiver, text, type) {
-      logg(`${date}. ${sender} wrote - ${text} - to ${receiver} \r\n`);
       await model.authChat(sender, receiver, text, type, date);
       const chatMessages = await model.getDMChat(sender, receiver);
       const items = [`${receiver}`, `${sender}`];
@@ -96,7 +85,6 @@ io.on("connection", (socket) => {
   });
   socket.on("deleteMe", (sender, receiver) => {
     async function deleteChat(sender, receiver) {
-      logg(`${date}. ${sender} deleted room ${receiver} \r\n`);
       await model.deleteChat(receiver);
       io.emit("chatDeleted", sender, receiver);
     }
@@ -104,7 +92,6 @@ io.on("connection", (socket) => {
   });
   socket.on("leave_room", (sender, receiver) => {
     function leaveRoom(sender, receiver) {
-      logg(`${date}. ${sender} has left room ${receiver} \r\n`);
       socket.leave(receiver);
       socket.to(receiver).emit("leaved_room", sender, receiver);
     }
@@ -112,7 +99,6 @@ io.on("connection", (socket) => {
   });
   socket.on("join_room", (sender, receiver) => {
     function joinRoom(sender, receiver) {
-      logg(`${date}. ${sender} has joined room ${receiver} \r\n`);
       socket.join(receiver);
       socket.emit("joined_room", sender, receiver);
       socket.to(receiver).emit("joining_room", sender, receiver);
@@ -123,7 +109,6 @@ io.on("connection", (socket) => {
     const items = [`${receiver}`, `${sender}`];
     const order = items.sort();
     async function leaveRoom(sender, receiver) {
-      logg(`${date}. ${sender} has left room ${receiver} \r\n`);
       socket.leave(`${order[0]} & ${order[1]}`);
       socket.to(receiver).emit("leaved_room", sender, receiver);
     }
@@ -133,7 +118,6 @@ io.on("connection", (socket) => {
     const items = [`${receiver}`, `${sender}`];
     const order = items.sort();
     async function joinDMroom(sender, receiver) {
-      logg(`${date}. ${sender} has joined room ${receiver} \r\n`);
       socket.join(`${order[0]} & ${order[1]}`);
       socket.emit("joined_DM_room", sender, receiver);
     }
@@ -144,7 +128,6 @@ io.on("connection", (socket) => {
       return socket.emit("noText", "Needs atleast 1 character");
     }
     function createChat(sender, receiver) {
-      logg(`${date}. ${sender} has created room ${receiver} \r\n`);
       io.emit("createChat", sender, receiver);
       socket.join(receiver);
       socket.emit("joined_room", sender, receiver);
@@ -180,7 +163,6 @@ io.on("connection", (socket) => {
         },
         process.env.TOKEN_SECRET
       );
-      logg(`${date}. ${username} has logged in \r\n`);
       socket.emit("loginResponse", { token });
     }
     handleLogin(data);
@@ -216,9 +198,7 @@ io.on("connection", (socket) => {
     }
     update(yourSocketId, yourUsername);
   });
-  socket.on("logoff", (username) => {
-    logg(`${date}. ${username} has logged off \r\n`);
-  });
+  socket.on("logoff", () => {});
 });
 
 http.listen(PORT, () => {});
