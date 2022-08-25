@@ -48,7 +48,7 @@ async function authChats() {
 async function getChat(receiver) {
   const sql = "SELECT * FROM chat WHERE receiver = $1";
   const result = await chatPGDB.query(sql, [receiver]);
-  return result.rows[0];
+  return result.rows;
 }
 
 async function getDMChat(sender, receiver) {
